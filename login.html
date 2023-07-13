@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui"
+>
+  <h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="estilo.css">
+    <title><ui:insert name="titulo">Inventario</ui:insert></title>
+
+    <h:outputScript
+      name="jquery.js"
+      library="primefaces/jquery"
+    ></h:outputScript>
+    <h:outputStylesheet name="estilo.css" library="css" />
+    <h:outputScript name="scripty.js" library="javascript" />
+  </h:head>
+
+  <h:body>
+    <div id="imagemLogin">
+      <h:graphicImage
+        library="img"
+        name="logoinhausindustrialbco-01.png"
+        styleClass="bordaImagem"
+      />
+    </div>
+    <div id="keyslogin">
+      <h:graphicImage
+        library="img"
+        name="logoinhausindustrialbco-01.png"
+        styleClass="bordaImagem"
+      />
+    </div>
+    <div class="contain">
+
+      <div id="formlogin">
+        <br />
+        <h:panelGroup rendered="#{!empty param.login_error}">
+          <h:outputLabel
+            rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message == 'Bad credentials'}"
+          >
+            <span class="estiloSpan" style="display:none;"
+              >Permissão Negada, login ou senha incorretos.
+            </span>
+          </h:outputLabel>
+  
+          <h:outputLabel
+            rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message == 'Maximum sessions of 1 for this principal exceeded'}"
+          >
+            <span class="estiloSpan" style="display:none;">Você está logado em outra sessão. </span>
+            <h:commandButton
+              value="Encerrar"
+              style="height: 40px; width: 100px; background: #cdcdc8; border: 1px"
+              onclick="invalidarSession('#{request.contextPath}', '/publico/invalidateSession')"
+            />
+          </h:outputLabel>
+        </h:panelGroup>
+        <br />
+        <p class="tituloform">Seja bem-vindo ao sistema de inventário.</p>
+        <div id="img">
+          <img src="" alt="">
+        </div>
+        <form 
+          id="formulario"
+          method="post"
+          name="formulario"
+          onsubmit="return validarSenhaLogin();"
+          action="#{request.contextPath}/j_spring_security_check"
+        >
+          <div style="display: block; padding-top: 2px; text-align: right">
+            
+            <input type="text" name="j_username" id="j_username" placeholder="Login"/>
+          </div>
+
+          <div style="display: block; padding-top: 2px; text-align: right">
+            
+            <input type="password" name="j_password" id="j_password" placeholder="Senha"/>
+          </div>
+
+          <div>
+            <span id="enviando"></span>
+            <button 
+              type="submit"
+              class="blue"            >
+              ENTRAR
+            </button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+
+    <script>
+      $('#j_username').focus();
+    </script>
+  </h:body>
+</html>
